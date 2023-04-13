@@ -5,10 +5,14 @@ display: flex;
 flex-direction: column;`;
 
 export const StyledLabel = styled.label`
+margin-top: 10px;
 `;
 
-export const StyledInput = styled.input`margin-left: 10px`;
+export const StyledInput = styled.input`
+display: block;
+`;
 
 export const StyledButton = styled.button`
+margin-top: 10px;
 width: fit-content;
 `;
