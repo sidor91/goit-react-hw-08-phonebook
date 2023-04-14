@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
-import {
-  ContactItem,
-  ContactName,
-  ContactNumber,
-  ContactDeleteButton,
-  ContactData,
-  ContactActioons,
-  ContactEditButton,
-} from './Contact.styled';
+// import {
+//   ContactItem,
+//   ContactName,
+//   ContactNumber,
+//   ContactDeleteButton,
+//   ContactData,
+//   ContactActioons,
+//   ContactEditButton,
+// } from './Contact.styled';
 import { useDispatch } from 'react-redux';
 import {
   toggleModal,
@@ -17,6 +17,7 @@ import {
   addEditedId,
 } from '../../redux/contacts/slice';
 import { deleteContact } from '../../redux/contacts/operations';
+
 
 const Contact = ({ name, number, id }) => {
   const dispatch = useDispatch();
@@ -28,23 +29,20 @@ const Contact = ({ name, number, id }) => {
     dispatch(setIsContactEdited(true));
   };
   return (
-    <ContactItem>
-      <ContactData>
-        <ContactName>{name}:</ContactName>
-        <ContactNumber>{number}</ContactNumber>
-      </ContactData>
-      <ContactActioons>
-        <ContactEditButton type="button" onClick={handleEdit}>
-          Edit
-        </ContactEditButton>
-        <ContactDeleteButton
-          type="button"
-          onClick={() => dispatch(deleteContact(id))}
-        >
-          Delete
-        </ContactDeleteButton>
-      </ContactActioons>
-    </ContactItem>
+    <li>
+        <div>
+          <span>{name}:</span>
+          <span>{number}</span>
+        </div>
+        <div>
+          <button type="button" onClick={handleEdit}>
+            Edit
+          </button>
+          <button type="button" onClick={() => dispatch(deleteContact(id))}>
+            Delete
+          </button>
+        </div>
+    </li>
   );
 };
 

@@ -1,11 +1,21 @@
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../redux/auth/operations';
+// import {
+//   StyledForm,
+//   StyledInput,
+//   StyledLabel,
+//   StyledButton,
+// } from './LoginPage.styled';
 import {
-  StyledForm,
-  StyledInput,
-  StyledLabel,
-  StyledButton,
-} from './LoginPage.styled';
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  FormErrorMessage,
+  FormHelperText,
+  Container,
+  Heading,
+} from '@chakra-ui/react';
 
 
 const LoginPage = () => {
@@ -22,20 +32,22 @@ const LoginPage = () => {
     );
   };
   return (
-    <div>
-      <h1>Please login</h1>
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledLabel>
-          Email
-          <StyledInput type="email" name="email" />
-        </StyledLabel>
-        <StyledLabel>
-          Password
-          <StyledInput type="text" name="password" />
-        </StyledLabel>
-        <StyledButton type="submit">Login</StyledButton>
-      </StyledForm>
-    </div>
+    <Container>
+      <Heading mb={4} mt={4}>Please login</Heading>
+      <form onSubmit={handleSubmit}>
+        <FormControl>
+          <FormLabel>
+            Email
+            <Input focusBorderColor="#DD6B20" type="email" name="email" />
+          </FormLabel>
+          <FormLabel>
+            Password
+            <Input focusBorderColor="#DD6B20" type="text" name="password" />
+          </FormLabel>
+        </FormControl>
+        <Button type="submit">Login</Button>
+      </form>
+    </Container>
   );
 };
 

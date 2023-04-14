@@ -1,26 +1,26 @@
 import { useDispatch } from 'react-redux';
 import { useAuth } from 'utilites/hooks/useAuth';
 import { logoutUser } from '../../redux/auth/operations';
-import { StyledDiv, StyledButton } from './UserMenu.styled';
+import { StyledDiv } from './UserMenu.styled';
+import { Button } from '@chakra-ui/button';
 
 const UserMenu = () => {
-  const { isLoggedIn, userName } = useAuth();
+  const { userName } = useAuth();
     const dispatch = useDispatch();
     
     return (
-      isLoggedIn && (
-        <StyledDiv>
-          <p>Hello, {userName}!</p>
-          <StyledButton
-            type="button"
-            onClick={() => {
-              dispatch(logoutUser());
-            }}
-          >
-            Logout
-          </StyledButton>
-        </StyledDiv>
-      )
+      <StyledDiv>
+        <p>Hello, {userName}!</p>
+        <Button
+          ml={4}
+          colorScheme="orange"
+          onClick={() => {
+            dispatch(logoutUser());
+          }}
+        >
+          Logout
+        </Button>
+      </StyledDiv>
     );
 };
 

@@ -7,7 +7,7 @@ import ContactList from '../../components/ContactList';
 import Filter from '../../components/Filter';
 import Loader from '../../components/Loader';
 import { useContacts } from 'utilites/hooks/useContacts';
-import { StyledButton, StyledIcon, Container } from './ContactsPage.styled';
+// import { StyledButton, StyledIcon, Container } from './ContactsPage.styled';
 
 const ContactsPage = () => {
   const { contacts, isLoading, error } = useContacts();
@@ -20,17 +20,17 @@ const ContactsPage = () => {
   return (
     <>
       <Section>
-        <Container>
+        <div>
           <span>Add a contact by clicking a button</span>
-          <StyledButton
+          <button
             type="button"
             onClick={() => {
               dispatch(toggleModal());
             }}
           >
-            <StyledIcon />
-          </StyledButton>
-        </Container>
+            {/* <StyledIcon /> */} Add
+          </button>
+        </div>
       </Section>
       <Section title="Contacts">
         {isLoading && !error && contacts.length > 0 && <Loader />}

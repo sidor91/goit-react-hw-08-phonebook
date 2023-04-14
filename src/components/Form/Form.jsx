@@ -9,8 +9,9 @@ import {
   FormErrorMessage,
   Input,
   Button,
+  HStack,
+  Box,
 } from '@chakra-ui/react';
-import { StyledDiv } from './Form.styled';
 
 const initialValues = { name: '', number: '' };
 const schema = yup.object({
@@ -38,7 +39,7 @@ const FormComponent = ({ dataToEdit = null, closeModal }) => {
 
   const validateName = value => {
     if (!value) {
-      return ('This field is required');
+      return 'This field is required';
     }
   };
 
@@ -60,7 +61,7 @@ const FormComponent = ({ dataToEdit = null, closeModal }) => {
           {({ field, form }) => (
             <FormControl isInvalid={form.errors.name && form.touched.name}>
               <FormLabel>Full name</FormLabel>
-              <Input {...field} placeholder="Name" />
+              <Input focusBorderColor="#DD6B20" {...field} placeholder="Name" />
               <FormErrorMessage>{form.errors.name}</FormErrorMessage>
             </FormControl>
           )}
@@ -74,29 +75,42 @@ const FormComponent = ({ dataToEdit = null, closeModal }) => {
           required
         >
           {({ field, form }) => (
-            <FormControl isInvalid={form.errors.name && form.touched.name}>
+            <FormControl isInvalid={form.errors.number}>
               <FormLabel>Phone number</FormLabel>
-              <Input {...field} placeholder="Number" />
-              <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+              <Input
+                focusBorderColor="#DD6B20"
+                {...field}
+                placeholder="Number"
+              />
+              <FormErrorMessage>{form.errors.number}</FormErrorMessage>
             </FormControl>
           )}
         </Field>
-        <StyledDiv>
-          <Button mt={4} colorScheme="teal" isLoading={isLoading} type="submit">
-            Save
-          </Button>
-          <Button
-            mt={4}
-            ml="auto"
-            colorScheme="gray"
-            type="button"
-            onClick={() => {
-              closeModal();
-            }}
-          >
-            Cancel
-          </Button>
-        </StyledDiv>
+        <HStack>
+          <Box>
+            <Button
+              mt={4}
+              colorScheme="orange"
+              isLoading={isLoading}
+              type="submit"
+            >
+              Save
+            </Button>
+          </Box>
+
+          <Box>
+            <Button
+              mt={4}
+              colorScheme="gray"
+              type="button"
+              onClick={() => {
+                closeModal();
+              }}
+            >
+              Cancel
+            </Button>
+          </Box>
+        </HStack>
       </Form>
     </Formik>
   );

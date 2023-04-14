@@ -1,11 +1,21 @@
 import { useDispatch } from 'react-redux';
 import { signupUser } from '../../redux/auth/operations'
+// import {
+//   StyledForm,
+//   StyledInput,
+//   StyledLabel,
+//   StyledButton,
+// } from './RegisterPage.styled';
 import {
-  StyledForm,
-  StyledInput,
-  StyledLabel,
-  StyledButton,
-} from './RegisterPage.styled';
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  FormErrorMessage,
+  FormHelperText,
+  Container,
+  Heading,
+} from '@chakra-ui/react';
 
 const RegisterPage = () => {
     const dispatch = useDispatch();
@@ -23,24 +33,28 @@ const RegisterPage = () => {
       );
   };
   return (
-    <div>
-      <h1>Please register</h1>
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledLabel>
-          Username
-          <StyledInput type="text" name="username" />
-        </StyledLabel>
-        <StyledLabel>
-          Email
-          <StyledInput type="email" name="email" />
-        </StyledLabel>
-        <StyledLabel>
-          Password
-          <StyledInput type="text" name="password" />
-        </StyledLabel>
-        <StyledButton type="submit">Signup</StyledButton>
-      </StyledForm>
-    </div>
+    <Container>
+      <Heading mb={4} mt={4}>
+        Please register
+      </Heading>
+      <form onSubmit={handleSubmit}>
+        <FormControl>
+          <FormLabel>
+            Username
+            <Input focusBorderColor="#DD6B20" type="text" name="username" />
+          </FormLabel>
+          <FormLabel>
+            Email
+            <Input focusBorderColor="#DD6B20" type="email" name="email" />
+          </FormLabel>
+          <FormLabel>
+            Password
+            <Input focusBorderColor="#DD6B20" type="text" name="password" />
+          </FormLabel>
+        </FormControl>
+        <Button type="submit">Signup</Button>
+      </form>
+    </Container>
   );
 };
 
