@@ -1,4 +1,4 @@
-import { MagnifyingGlass } from 'react-loader-spinner';
+// import { MagnifyingGlass } from 'react-loader-spinner';
 import { Skeleton, Stack } from '@chakra-ui/react';
 
 const Loader = () => (

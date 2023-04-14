@@ -3,7 +3,10 @@ import { useContacts } from 'utilites/hooks/useContacts';
 // import { ListOfContacts } from './ContactList.styled';
 import Contact from '../Contact';
 import Loader from 'components/Loader/Loader';
-import { Stack, HStack, VStack, StackDivider } from '@chakra-ui/react';
+import {
+  // Stack, HStack,
+  VStack, StackDivider
+} from '@chakra-ui/react';
 
 const ContactList = () => {
   const { contacts, filter, isLoading } = useContacts();

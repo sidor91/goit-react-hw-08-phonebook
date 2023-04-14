@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import Loader from '../Loader/Loader';
 import {
   StyledHeader,
-  StyledMain,
+  // StyledMain,
 } from './SharedLayout.styled';
 import Navigation from 'components/Navigation/Navigation';
 import UserMenu from 'components/UserMenu/UserMenu';
