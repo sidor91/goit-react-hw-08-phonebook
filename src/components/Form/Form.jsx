@@ -1,24 +1,25 @@
-import { Formik, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
-import {
-  FormElement,
-  Label,
-  InputField,
-  Submit,
-  LabelName,
-} from './Form.styled';
 import { useDispatch } from 'react-redux';
 import { useContacts } from 'utilites/hooks/useContacts';
 import { addContact, patchContact } from '../../redux/contacts/operations';
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Input,
+  Button,
+} from '@chakra-ui/react';
+import { StyledDiv } from './Form.styled';
 
 const initialValues = { name: '', number: '' };
 const schema = yup.object({
   name: yup.string().required(),
-  number: yup.string().required(),
+  number: yup.number().required(),
 });
 
-const FormComponent = ({ dataToEdit = null }) => {
-  const { contacts, isContactEdited, editedId } = useContacts();
+const FormComponent = ({ dataToEdit = null, closeModal }) => {
+  const { contacts, isContactEdited, editedId, isLoading } = useContacts();
   const dispatch = useDispatch();
 
   const handleSubmit = ({ name, number }, { resetForm }) => {
@@ -35,41 +36,68 @@ const FormComponent = ({ dataToEdit = null }) => {
     resetForm();
   };
 
+  const validateName = value => {
+    if (!value) {
+      return ('This field is required');
+    }
+  };
+
   return (
     <Formik
       initialValues={dataToEdit || initialValues}
       onSubmit={handleSubmit}
       validationSchema={schema}
     >
-      <FormElement>
-        <Label>
-          <LabelName>Name</LabelName>
-          <InputField
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
-          <ErrorMessage name="name" />
-        </Label>
-        <Label>
-          <LabelName>Number</LabelName>
-          <InputField
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-          />
-          <ErrorMessage name="number" />
-        </Label>
-        {isContactEdited ? (
-          <Submit type="submit">Edit contact</Submit>
-        ) : (
-          <Submit type="submit">Add contact</Submit>
-        )}
-      </FormElement>
+      <Form>
+        <Field
+          validate={validateName}
+          type="text"
+          name="name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        >
+          {({ field, form }) => (
+            <FormControl isInvalid={form.errors.name && form.touched.name}>
+              <FormLabel>Full name</FormLabel>
+              <Input {...field} placeholder="Name" />
+              <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+            </FormControl>
+          )}
+        </Field>
+        <Field
+          validate={validateName}
+          type="tel"
+          name="number"
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          required
+        >
+          {({ field, form }) => (
+            <FormControl isInvalid={form.errors.name && form.touched.name}>
+              <FormLabel>Phone number</FormLabel>
+              <Input {...field} placeholder="Number" />
+              <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+            </FormControl>
+          )}
+        </Field>
+        <StyledDiv>
+          <Button mt={4} colorScheme="teal" isLoading={isLoading} type="submit">
+            Save
+          </Button>
+          <Button
+            mt={4}
+            ml="auto"
+            colorScheme="gray"
+            type="button"
+            onClick={() => {
+              closeModal();
+            }}
+          >
+            Cancel
+          </Button>
+        </StyledDiv>
+      </Form>
     </Formik>
   );
 };

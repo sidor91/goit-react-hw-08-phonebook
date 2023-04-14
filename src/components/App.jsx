@@ -8,7 +8,7 @@ import { RestrictedRoute } from './RestrictedRoute';
 import { useAuth } from 'utilites/hooks/useAuth'
 import { useContacts } from 'utilites/hooks/useContacts';
 import Loader from 'components/Loader';
-import Modal from 'components/Modal'
+import ModalComponent from 'components/Modal';
 
 import HomePage from 'pages/HomePage';
 import ContactsPage from 'pages/ContactsPage';
@@ -33,7 +33,9 @@ const App = () => {
     dispatch(FetchCurrentUser());
   }, [dispatch]);
 
-  return (isRefreshing? <Loader/> : (
+  return isRefreshing ? (
+    <Loader />
+  ) : (
     <>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
@@ -60,17 +62,14 @@ const App = () => {
           <Route
             path="/contacts"
             element={
-              <PrivateRoute
-                redirectTo="/login"
-                component={<ContactsPage />}
-              />
+              <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
             }
           />
         </Route>
       </Routes>
-      {isModalOpen && <Modal/>}
+      {isModalOpen && <ModalComponent />}
     </>
-  ));
+  );
 };
 
 export { App };

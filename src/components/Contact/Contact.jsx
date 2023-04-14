@@ -13,7 +13,7 @@ import {
   toggleModal,
   addNameToEdit,
   addPhoneToEdit,
-  isContactEdited,
+  setIsContactEdited,
   addEditedId,
 } from '../../redux/contacts/slice';
 import { deleteContact } from '../../redux/contacts/operations';
@@ -25,7 +25,7 @@ const Contact = ({ name, number, id }) => {
     dispatch(addNameToEdit(name));
     dispatch(addPhoneToEdit(number));
     dispatch(addEditedId(id));
-    dispatch(isContactEdited(true));
+    dispatch(setIsContactEdited(true));
   };
   return (
     <ContactItem>

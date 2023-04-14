@@ -1,49 +1,57 @@
 import { createPortal } from 'react-dom';
 import { useDispatch } from 'react-redux';
-import { useEffect, useCallback } from 'react';
 import {
   toggleModal,
-  isContactEdited,
+  setIsContactEdited,
   addNameToEdit,
   addPhoneToEdit,
 } from '../../redux/contacts/slice';
 import { useContacts } from 'utilites/hooks/useContacts';
-import { Backdrop, ModalWindow } from './Modal.styled';
 import FormComponent from '../Form';
+
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react';
 
 const modalRoot = document.querySelector('#modal-root');
 
-const Modal = () => {
-    const dispatch = useDispatch();
-    const { editedName, editedPhone } = useContacts();
-    
-    const initialValues = { name: `${ editedName }`, number: `${ editedPhone }` };
+const ModalComponent = () => {
+  const dispatch = useDispatch();
+  const { editedName, editedPhone, isModalOpen, isContactEdited } =
+    useContacts();
 
-  const handleModalClose = useCallback(
-    e => {
-      if (e.target === e.currentTarget || e.code === 'Escape') {
-          dispatch(toggleModal());
-          dispatch(addNameToEdit(''));
-          dispatch(addPhoneToEdit(''));
-          dispatch(isContactEdited(false));
-        window.removeEventListener('keydown', handleModalClose);
-      }
-    },
-    [dispatch]
-  );
+  const initialValues = { name: `${editedName}`, number: `${editedPhone}` };
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleModalClose);
-  }, [handleModalClose]);
+  const handleModalClose = () => {
+    dispatch(toggleModal());
+    dispatch(addNameToEdit(''));
+    dispatch(addPhoneToEdit(''));
+    dispatch(setIsContactEdited(false));
+  };
 
   return createPortal(
-    <Backdrop onClick={handleModalClose}>
-      <ModalWindow>
-        <FormComponent dataToEdit={initialValues} />
-      </ModalWindow>
-    </Backdrop>,
+    <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          {isContactEdited ? 'Edit a contact' : 'Create a contact'}
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody pb={6}>
+          <FormComponent
+            dataToEdit={initialValues}
+            closeModal={handleModalClose}
+          />
+        </ModalBody>
+      </ModalContent>
+    </Modal>,
     modalRoot
   );
 };
 
-export default Modal;
+export default ModalComponent;

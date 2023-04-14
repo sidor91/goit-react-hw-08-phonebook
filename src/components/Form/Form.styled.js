@@ -28,3 +28,8 @@ export const Submit = styled.button`
   display: inline-block;
   width: 100px;
 `;
+
+export const StyledDiv = styled.div`
+display: flex;
+/* justify-content: right; */
+`
