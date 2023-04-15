@@ -1,21 +1,30 @@
 import { Container, Heading, Text } from '@chakra-ui/layout';
+import { useAuth } from 'utilites/hooks/useAuth';
 
 const HomePage = () => {
-    return (
-      <Container maxW="container.xl">
-        <Heading
-          mt={6}
-          as="h1"
-          colorScheme="orange"
-          fontSize={{ base: 'sm', md: 'md', lg: 'xl' }}
-        >
-          Hey, welcome to the best phonebook SPA ever!
-        </Heading>
-        <Text fontSize={{ base: 'sm', md: 'md', lg: 'x;' }}>
-          To navigate, use navigation links in the header menu
+  const { isLoggedIn } = useAuth();
+  return (
+    <Container maxW="container.xl" align="center">
+      <Heading
+        mt={6}
+        as="h1"
+        colorScheme="orange"
+        fontSize={{ base: 'md', sm: 'xl' }}
+      >
+        Hey, welcome to the Phonebook app!
+      </Heading>
+
+      {isLoggedIn ? (
+        <Text fontSize={{ base: 'md', sm: 'xl' }}>
+          Please follow the contacts page to add or review the contacts.
         </Text>
-      </Container>
-    );
-}
+      ) : (
+        <Text fontSize={{ base: 'md', sm: 'xl' }}>
+          Please, either login or register to use this app
+        </Text>
+      )}
+    </Container>
+  );
+};
 
 export default HomePage;

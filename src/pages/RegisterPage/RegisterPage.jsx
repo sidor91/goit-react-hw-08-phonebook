@@ -34,7 +34,7 @@ const RegisterPage = () => {
   };
   return (
     <Container>
-      <Heading mb={4} mt={4}>
+      <Heading mb={4} mt={4} align="center">
         Please register
       </Heading>
       <form onSubmit={handleSubmit}>
@@ -52,7 +52,9 @@ const RegisterPage = () => {
             <Input focusBorderColor="#DD6B20" type="text" name="password" />
           </FormLabel>
         </FormControl>
-        <Button type="submit">Signup</Button>
+        <Button colorScheme="orange" type="submit">
+          Signup
+        </Button>
       </form>
     </Container>
   );

@@ -33,7 +33,9 @@ const LoginPage = () => {
   };
   return (
     <Container>
-      <Heading mb={4} mt={4}>Please login</Heading>
+      <Heading mb={4} mt={4} align="center">
+        Please login
+      </Heading>
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel>
@@ -45,7 +47,9 @@ const LoginPage = () => {
             <Input focusBorderColor="#DD6B20" type="text" name="password" />
           </FormLabel>
         </FormControl>
-        <Button type="submit">Login</Button>
+        <Button colorScheme="orange" type="submit">
+          Login
+        </Button>
       </form>
     </Container>
   );
