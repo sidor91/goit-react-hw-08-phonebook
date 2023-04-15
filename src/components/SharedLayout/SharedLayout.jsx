@@ -13,8 +13,8 @@ import {
   Box,
   Spacer,
   Container,
-  Switch,
   useColorMode,
+  IconButton,
 } from '@chakra-ui/react';
 // import { SunIcon } from '@chakra-ui/icons';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
@@ -22,7 +22,7 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 const SharedLayout = () => {
   const { isLoggedIn } = useAuth();
-  const { toggleColorMode } = useColorMode();
+  const { toggleColorMode, colorMode } = useColorMode();
   return (
     <Container maxW="container.xl">
       <StyledHeader>
@@ -31,7 +31,14 @@ const SharedLayout = () => {
             <Navigation />
           </Box>
           <Spacer />
-          <SunIcon mr={2} />
+          <IconButton
+            aria-label="toggle theme"
+            rounded="full"
+            size="xs"
+            onClick={toggleColorMode}
+            icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
+          />
+          {/* <SunIcon mr={2} />
           <Switch
             colorScheme="orange"
             mr={2}
@@ -39,7 +46,7 @@ const SharedLayout = () => {
               toggleColorMode();
             }}
           />
-          <MoonIcon />
+          <MoonIcon /> */}
           <Box p="4">{isLoggedIn ? <UserMenu /> : <AuthNav />}</Box>
         </Flex>
       </StyledHeader>
