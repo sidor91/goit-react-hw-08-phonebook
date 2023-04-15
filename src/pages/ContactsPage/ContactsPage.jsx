@@ -8,7 +8,7 @@ import Filter from '../../components/Filter';
 import Loader from '../../components/Loader';
 import { useContacts } from 'utilites/hooks/useContacts';
 // import { StyledButton, StyledIcon, Container } from './ContactsPage.styled';
-import { Button, Heading, Divider, Box, Text, VStack } from '@chakra-ui/react';
+import { Button, Heading, Divider, Text, VStack } from '@chakra-ui/react';
 
 const ContactsPage = () => {
   const { contacts, isLoading, error } = useContacts();
