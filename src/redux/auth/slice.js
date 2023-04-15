@@ -1,18 +1,29 @@
 import { persistReducer } from 'redux-persist';
 import { createSlice } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
-import { signupUser, loginUser, logoutUser, FetchCurrentUser } from './operations';
+import {
+  signupUser,
+  loginUser,
+  logoutUser,
+  FetchCurrentUser,
+} from './operations';
 
 const initialState = {
   user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  darkTheme: false,
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    toggleDarkTheme: (state) => {
+      state.darkTheme = !state.darkTheme;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(signupUser.fulfilled, (state, action) => {
@@ -38,8 +49,8 @@ export const authSlice = createSlice({
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
-        .addCase(FetchCurrentUser.rejected, state => {
-          state.isRefreshing = false;
+      .addCase(FetchCurrentUser.rejected, state => {
+        state.isRefreshing = false;
       })
       .addDefaultCase(state => state);
   },
@@ -49,10 +60,14 @@ const persistConfig = {
   key: 'auth',
   version: 1,
   storage,
-  whitelist: ['token'],
+  whitelist: ['token', 'darkTheme'],
 };
 
 export const authPersistedReducer = persistReducer(
   persistConfig,
   authSlice.reducer
 );
+
+export const {
+  toggleDarkTheme,
+} = authSlice.actions;

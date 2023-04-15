@@ -1,18 +1,44 @@
-import { NavigationLink } from './Navigation.styled';
 import { useAuth } from 'utilites/hooks/useAuth';
-// import { NavLink } from 'react-router-dom';
+import { ButtonGroup, Button } from '@chakra-ui/react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
-const { isLoggedIn } = useAuth();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
-    return (
-      <nav>
-        <NavigationLink to="/" fontSize={{ base: 'sm', md: 'md', lg: 'md' }}>
+  const handleClick = () => {
+    if (pathname === '/contacts') {
+      return navigate('/');
+    }
+    return navigate('/contacts');
+  }
+  return (
+    <nav>
+      <ButtonGroup gap="2">
+        <Button
+          isActive={pathname === '/'}
+          colorScheme="orange"
+          variant="link"
+          onClick={handleClick}
+          fontSize="xl"
+        >
           Home
-        </NavigationLink>
-        {isLoggedIn && <NavigationLink to="/contacts">Contacts</NavigationLink>}
-      </nav>
-    );
+        </Button>
+        {isLoggedIn && (
+          <Button
+            isActive={pathname === '/contacts'}
+            colorScheme="orange"
+            variant="link"
+            onClick={handleClick}
+            fontSize="xl"
+          >
+            Contacts
+          </Button>
+        )}
+      </ButtonGroup>
+    </nav>
+  );
 }
 
 
