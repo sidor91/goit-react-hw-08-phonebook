@@ -5,7 +5,9 @@ import Contact from '../Contact';
 import Loader from 'components/Loader/Loader';
 import {
   // Stack, HStack,
-  VStack, StackDivider
+  VStack,
+  StackDivider,
+  List,
 } from '@chakra-ui/react';
 
 const ContactList = () => {
@@ -22,7 +24,7 @@ const ContactList = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <ul>
+    <List mt={4}>
       <VStack
         divider={<StackDivider borderColor="gray.200" />}
         spacing={4}
@@ -32,7 +34,7 @@ const ContactList = () => {
           <Contact key={id} name={name} number={number} id={id} />
         ))}
       </VStack>
-    </ul>
+    </List>
   );
 };
 

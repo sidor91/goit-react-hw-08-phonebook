@@ -17,7 +17,17 @@ import {
   addEditedId,
 } from '../../redux/contacts/slice';
 import { deleteContact } from '../../redux/contacts/operations';
-
+import {
+  Avatar,
+  Button,
+  ButtonGroup,
+  Box,
+  Flex,
+  Spacer,
+  HStack,
+  ListItem,
+  Text,
+} from '@chakra-ui/react';
 
 const Contact = ({ name, number, id }) => {
   const dispatch = useDispatch();
@@ -29,20 +39,52 @@ const Contact = ({ name, number, id }) => {
     dispatch(setIsContactEdited(true));
   };
   return (
-    <li>
-        <div>
-          <span>{name}:</span>
-          <span>{number}</span>
-        </div>
-        <div>
-          <button type="button" onClick={handleEdit}>
+    <ListItem>
+      <HStack display={{ base: 'block', sm: 'flex' }} w="100%">
+        <Flex justify="space-between" w="100%">
+          <Avatar
+            mr={4}
+            name={name}
+            src="https://bit.ly/broken-ListItemnk"
+          />
+          <HStack
+            w="100%"
+            justify="space-between"
+          >
+            <Box>
+              <Text fontSize={{ base: 'sm', md: 'md' }}>{name}:</Text>
+            </Box>
+            <Spacer />
+            <Box>
+              <Text fontSize={{ base: 'sm', md: 'md' }}>{number}</Text>
+            </Box>
+          </HStack>
+        </Flex>
+        <Spacer />
+        <ButtonGroup
+          display={{ base: 'flex', sm: 'inline-flex' }}
+          justifyContent={{ base: 'center', sm: 'normal' }}
+          w={{ base: '100%', sm: 'auto' }}
+        >
+          <Button
+            size="sm"
+            colorScheme="orange"
+            type="button"
+            onClick={handleEdit}
+          >
             Edit
-          </button>
-          <button type="button" onClick={() => dispatch(deleteContact(id))}>
+          </Button>
+          <Button
+            size="sm"
+            colorScheme="orange"
+            type="button"
+            onClick={() => dispatch(deleteContact(id))}
+          >
             Delete
-          </button>
-        </div>
-    </li>
+          </Button>
+        </ButtonGroup>
+      </HStack>
+    </ListItem>
   );
 };
 
@@ -53,3 +95,13 @@ Contact.propTypes = {
 };
 
 export default Contact;
+
+<Box>
+  <Flex>
+    <Box w="70px" h="10" bg="red.500" />
+    <Spacer />
+    <Box w="170px" h="10" bg="red.500" />
+    <Spacer />
+    <Box w="180px" h="10" bg="red.500" />
+  </Flex>
+</Box>;

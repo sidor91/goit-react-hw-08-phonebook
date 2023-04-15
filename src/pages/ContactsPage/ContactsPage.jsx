@@ -8,6 +8,7 @@ import Filter from '../../components/Filter';
 import Loader from '../../components/Loader';
 import { useContacts } from 'utilites/hooks/useContacts';
 // import { StyledButton, StyledIcon, Container } from './ContactsPage.styled';
+import { Button, Heading, Divider, Box, Text, VStack } from '@chakra-ui/react';
 
 const ContactsPage = () => {
   const { contacts, isLoading, error } = useContacts();
@@ -20,18 +21,24 @@ const ContactsPage = () => {
   return (
     <>
       <Section>
-        <div>
-          <span>Add a contact by clicking a button</span>
-          <button
+        <VStack  justifyContent='center'>
+          <Heading my={4} as="h1" align='center'>
+            Add a contact by clicking a button
+          </Heading>
+          <Button
+            colorScheme="orange"
+            fontSize="sm"
+            size='sm'
             type="button"
             onClick={() => {
               dispatch(toggleModal());
             }}
           >
             {/* <StyledIcon /> */} Add
-          </button>
-        </div>
+          </Button>
+        </VStack>
       </Section>
+      <Divider />
       <Section title="Contacts">
         {isLoading && !error && contacts.length > 0 && <Loader />}
         {error && <p>Something went wrong. {error}</p>}
@@ -42,7 +49,7 @@ const ContactsPage = () => {
           </>
         )}
         {contacts.length === 0 && !isLoading && (
-          <p>You haven't added any contacts yet 😥</p>
+          <Text>You haven't added any contacts yet 😥</Text>
         )}
       </Section>
     </>

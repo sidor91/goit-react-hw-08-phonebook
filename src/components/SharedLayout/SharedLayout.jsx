@@ -9,13 +9,13 @@ import Navigation from 'components/Navigation/Navigation';
 import UserMenu from 'components/UserMenu/UserMenu';
 import AuthNav from 'components/AuthNav/AuthNav';
 import { useAuth } from 'utilites/hooks/useAuth';
-import { Flex, Box, Spacer } from '@chakra-ui/layout';
+import { Flex, Box, Spacer, Container } from '@chakra-ui/layout';
 
 
 const SharedLayout = () => {
   const { isLoggedIn } = useAuth();
   return (
-    <>
+    <Container>
       <StyledHeader>
         <Flex align="center">
           <Box p="4">
@@ -30,7 +30,7 @@ const SharedLayout = () => {
           <Outlet />
         </Suspense>
       </main>
-    </>
+    </Container>
   );
 };
 

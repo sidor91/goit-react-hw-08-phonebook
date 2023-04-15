@@ -8,9 +8,9 @@ export const NavigationLink = styled(NavLink)`
   text-decoration: none;
   color: black;
 
-  /* @media screen and (max-width: 720px) {
+  @media screen and (max-width: 767px) {
     font-size: 16px;
-  } */
+  }
 
   &.active {
     color: #dd6b20;

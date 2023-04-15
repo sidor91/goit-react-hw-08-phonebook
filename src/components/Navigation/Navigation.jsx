@@ -7,7 +7,9 @@ const { isLoggedIn } = useAuth();
 
     return (
       <nav>
-        <NavigationLink to="/">Main Page</NavigationLink>
+        <NavigationLink to="/" fontSize={{ base: 'sm', md: 'md', lg: 'md' }}>
+          Home
+        </NavigationLink>
         {isLoggedIn && <NavigationLink to="/contacts">Contacts</NavigationLink>}
       </nav>
     );
