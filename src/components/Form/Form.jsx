@@ -20,16 +20,22 @@ const schema = yup.object({
 });
 
 const FormComponent = ({ dataToEdit = null, closeModal }) => {
-  const { contacts, isContactEdited, editedId, isLoading } = useContacts();
+  const {
+    contacts,
+    isContactEdited,
+    editedContactData: { id },
+    isLoading,
+  } = useContacts();
   const dispatch = useDispatch();
 
   const handleSubmit = ({ name, number }, { resetForm }) => {
     const isNameTaken = contacts.find(contact => contact.name === name);
+    
     if (isNameTaken) {
       return alert(`${isNameTaken.name} is already in contacts`);
     }
     if (isContactEdited) {
-      dispatch(patchContact({ name, number, editedId }));
+      dispatch(patchContact({ name, number, id }));
       resetForm();
       return;
     }

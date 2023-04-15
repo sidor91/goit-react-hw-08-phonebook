@@ -3,7 +3,5 @@ export const getIsLoading = state => state.contacts.contacts.isLoading;
 export const getError = state => state.contacts.contacts.error;
 export const getFilter = state => state.contacts.filter;
 export const getIsModalOpen = state => state.contacts.isModalOpen;
-export const getEditedName = state => state.contacts.editedContact.editedName;
-export const getEditedPhone = state => state.contacts.editedContact.editedPhone;
+export const getEditedContact = state => state.contacts.editedContact.editedContactData;
 export const getIsContactEdited = state => state.contacts.editedContact.isContactEdited;
-export const getEditedId = state => state.contacts.editedContact.editedId;

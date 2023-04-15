@@ -1,10 +1,10 @@
-import { Container, Heading, Text } from '@chakra-ui/layout';
+import { Heading, Text,Box } from '@chakra-ui/layout';
 import { useAuth } from 'utilites/hooks/useAuth';
 
 const HomePage = () => {
   const { isLoggedIn } = useAuth();
   return (
-    <Container maxW="container.xl" align="center">
+    <Box align="center">
       <Heading
         mt={6}
         as="h1"
@@ -23,7 +23,7 @@ const HomePage = () => {
           Please, either login or register to use this app
         </Text>
       )}
-    </Container>
+    </Box>
   );
 };
 

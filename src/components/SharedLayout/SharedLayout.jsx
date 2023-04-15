@@ -15,7 +15,7 @@ import { Flex, Box, Spacer, Container } from '@chakra-ui/layout';
 const SharedLayout = () => {
   const { isLoggedIn } = useAuth();
   return (
-    <Container>
+    <Container maxW="container.xl">
       <StyledHeader>
         <Flex align="center">
           <Box p="4">

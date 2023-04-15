@@ -3,8 +3,7 @@ import { useDispatch } from 'react-redux';
 import {
   toggleModal,
   setIsContactEdited,
-  addNameToEdit,
-  addPhoneToEdit,
+  addEditedContactData,
 } from '../../redux/contacts/slice';
 import { useContacts } from 'utilites/hooks/useContacts';
 import FormComponent from '../Form';
@@ -22,15 +21,17 @@ const modalRoot = document.querySelector('#modal-root');
 
 const ModalComponent = () => {
   const dispatch = useDispatch();
-  const { editedName, editedPhone, isModalOpen, isContactEdited } =
-    useContacts();
+  const {
+    isModalOpen,
+    isContactEdited,
+    editedContactData:{name, number},
+  } = useContacts();
 
-  const initialValues = { name: `${editedName}`, number: `${editedPhone}` };
+  const initialValues = { name, number };
 
   const handleModalClose = () => {
     dispatch(toggleModal());
-    dispatch(addNameToEdit(''));
-    dispatch(addPhoneToEdit(''));
+    dispatch(addEditedContactData({name: '', number: '', id: ''}));
     dispatch(setIsContactEdited(false));
   };
 

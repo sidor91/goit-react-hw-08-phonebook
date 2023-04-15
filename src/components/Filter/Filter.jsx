@@ -8,14 +8,16 @@ const Filter = () => {
 
   return (
     <Input
+      focusBorderColor="#DD6B20"
+      size="sm"
       mb={4}
-        placeholder="Find contacts by name"
-        type="text"
-        name="filter"
-        onChange={e => {
-          dispatch(addFilter(e.target.value));
-        }}
-      />
+      placeholder="Find contacts by name"
+      type="text"
+      name="filter"
+      onChange={e => {
+        dispatch(addFilter(e.target.value));
+      }}
+    />
   );
 };
 

@@ -5,10 +5,8 @@ import {
   getError,
   getFilter,
   getIsModalOpen,
-  getEditedName,
-  getEditedPhone,
   getIsContactEdited,
-  getEditedId,
+  getEditedContact,
 } from 'redux/contacts/selectors';
 
 export const useContacts = () => {
@@ -17,10 +15,8 @@ export const useContacts = () => {
   const error = useSelector(getError);
   const filter = useSelector(getFilter);
   const isModalOpen = useSelector(getIsModalOpen);
-  const editedName = useSelector(getEditedName);
-  const editedPhone = useSelector(getEditedPhone);
   const isContactEdited = useSelector(getIsContactEdited);
-  const editedId = useSelector(getEditedId);
+  const editedContactData = useSelector(getEditedContact);
 
   return {
     contacts,
@@ -28,9 +24,7 @@ export const useContacts = () => {
     error,
     filter,
     isModalOpen,
-    editedName,
-    editedPhone,
     isContactEdited,
-    editedId,
+    editedContactData,
   };
 };

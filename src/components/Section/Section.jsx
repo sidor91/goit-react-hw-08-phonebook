@@ -1,13 +1,21 @@
 import PropTypes from 'prop-types';
-// import { SectionWrapper, SectionTitle } from './Section.styled';
-import { Heading, Container } from '@chakra-ui/react';
+import { Heading, Box } from '@chakra-ui/react';
 
 const Section = ({ title, children }) => (
   <section>
-    <Container centerContent my={4}>
-      {title && <Heading mb={4} as="h2">{title}</Heading>}
+    <Box my={4} textAlign="center">
+      {title && (
+        <Heading
+          my={4}
+          as="h2"
+          align="center"
+          fontSize={{ base: 'md', sm: 'xl' }}
+        >
+          {title}
+        </Heading>
+      )}
       {children}
-    </Container>
+    </Box>
   </section>
 );
 

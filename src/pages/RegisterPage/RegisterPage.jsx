@@ -11,10 +11,8 @@ import {
   FormLabel,
   Input,
   Button,
-  // FormErrorMessage,
-  // FormHelperText,
-  Container,
   Heading,
+  Box,
 } from '@chakra-ui/react';
 
 const RegisterPage = () => {
@@ -33,8 +31,8 @@ const RegisterPage = () => {
       );
   };
   return (
-    <Container>
-      <Heading mb={4} mt={4} align="center">
+    <Box>
+      <Heading my={4} align="center">
         Please register
       </Heading>
       <form onSubmit={handleSubmit}>
@@ -52,11 +50,11 @@ const RegisterPage = () => {
             <Input focusBorderColor="#DD6B20" type="text" name="password" />
           </FormLabel>
         </FormControl>
-        <Button colorScheme="orange" type="submit">
+        <Button colorScheme="orange" type="submit" mt={4}>
           Signup
         </Button>
       </form>
-    </Container>
+    </Box>
   );
 };
 

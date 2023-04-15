@@ -15,9 +15,11 @@ const initialState = {
   filter: '',
   isModalOpen: false,
   editedContact: {
-    editedName: '',
-    editedPhone: '',
-    editedId: '',
+    editedContactData: {
+      name: '',
+      number: '',
+      id: '',
+    },
     isContactEdited: false,
   },
 };
@@ -40,14 +42,8 @@ export const contactsSlice = createSlice({
     toggleModal: state => {
       state.isModalOpen = !state.isModalOpen;
     },
-    addNameToEdit: (state, action) => {
-      state.editedContact.editedName = action.payload;
-    },
-    addPhoneToEdit: (state, action) => {
-      state.editedContact.editedPhone = action.payload;
-    },
-    addEditedId: (state, action) => {
-      state.editedContact.editedId = action.payload;
+    addEditedContactData: (state, action) => {
+      state.editedContact.editedContactData = action.payload;
     },
     setIsContactEdited: (state, action) => {
       state.editedContact.isContactEdited =
@@ -73,7 +69,6 @@ export const contactsSlice = createSlice({
       .addCase(addContact.rejected, handleRejected)
       .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.contacts.isLoading = false;
         state.contacts.error = null;
         const index = state.contacts.items.findIndex(
@@ -90,9 +85,11 @@ export const contactsSlice = createSlice({
         state.isModalOpen = !state.isModalOpen;
         state.editedContact.isContactEdited =
           !state.editedContact.isContactEdited;
-        state.editedContact.editedName = '';
-        state.editedContact.editedPhone = '';
-        state.editedContact.editedId = '';
+        state.editedContact.editedContactData = {
+          name: '',
+          number: '',
+          id: '',
+        };
       })
       .addDefaultCase(state => state);
   },
@@ -101,9 +98,7 @@ export const contactsSlice = createSlice({
 export const {
   addFilter,
   toggleModal,
-  addNameToEdit,
-  addPhoneToEdit,
   setIsContactEdited,
-  addEditedId,
+  addEditedContactData,
 } = contactsSlice.actions;
 export default contactsSlice.reducer;

@@ -1,20 +1,9 @@
-import PropTypes from 'prop-types';
-// import {
-//   ContactItem,
-//   ContactName,
-//   ContactNumber,
-//   ContactDeleteButton,
-//   ContactData,
-//   ContactActioons,
-//   ContactEditButton,
-// } from './Contact.styled';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   toggleModal,
-  addNameToEdit,
-  addPhoneToEdit,
   setIsContactEdited,
-  addEditedId,
+  addEditedContactData,
 } from '../../redux/contacts/slice';
 import { deleteContact } from '../../redux/contacts/operations';
 import {
@@ -27,64 +16,59 @@ import {
   HStack,
   ListItem,
   Text,
+  Divider,
 } from '@chakra-ui/react';
 
 const Contact = ({ name, number, id }) => {
   const dispatch = useDispatch();
   const handleEdit = () => {
     dispatch(toggleModal());
-    dispatch(addNameToEdit(name));
-    dispatch(addPhoneToEdit(number));
-    dispatch(addEditedId(id));
+    dispatch(addEditedContactData({name, number, id}));
     dispatch(setIsContactEdited(true));
   };
   return (
-    <ListItem>
-      <HStack display={{ base: 'block', sm: 'flex' }} w="100%">
-        <Flex justify="space-between" w="100%">
-          <Avatar
-            mr={4}
-            name={name}
-            src="https://bit.ly/broken-ListItemnk"
-          />
-          <HStack
-            w="100%"
-            justify="space-between"
+    <>
+      <ListItem>
+        <HStack display={{ base: 'block', sm: 'flex' }} w="100%" spacing={4}>
+          <Flex justify="space-between" w="100%">
+            <Avatar mr={4} name={name} src="https://bit.ly/broken-ListItemnk" />
+            <HStack w="100%">
+              <Box>
+                <Text fontSize={{ base: 'sm', md: 'md' }}>{name}</Text>
+              </Box>
+              <Spacer />
+              <Box>
+                <Text fontSize={{ base: 'sm', md: 'md' }}>{number}</Text>
+              </Box>
+            </HStack>
+          </Flex>
+          <Spacer />
+          <ButtonGroup
+            display={{ base: 'flex', sm: 'inline-flex' }}
+            justifyContent={{ base: 'center', sm: 'normal' }}
+            w={{ base: '100%', sm: 'auto' }}
           >
-            <Box>
-              <Text fontSize={{ base: 'sm', md: 'md' }}>{name}:</Text>
-            </Box>
-            <Spacer />
-            <Box>
-              <Text fontSize={{ base: 'sm', md: 'md' }}>{number}</Text>
-            </Box>
-          </HStack>
-        </Flex>
-        <Spacer />
-        <ButtonGroup
-          display={{ base: 'flex', sm: 'inline-flex' }}
-          justifyContent={{ base: 'center', sm: 'normal' }}
-          w={{ base: '100%', sm: 'auto' }}
-        >
-          <Button
-            size="sm"
-            colorScheme="orange"
-            type="button"
-            onClick={handleEdit}
-          >
-            Edit
-          </Button>
-          <Button
-            size="sm"
-            colorScheme="orange"
-            type="button"
-            onClick={() => dispatch(deleteContact(id))}
-          >
-            Delete
-          </Button>
-        </ButtonGroup>
-      </HStack>
-    </ListItem>
+            <Button
+              size="sm"
+              colorScheme="orange"
+              type="button"
+              onClick={handleEdit}
+            >
+              Edit
+            </Button>
+            <Button
+              size="sm"
+              colorScheme="orange"
+              type="button"
+              onClick={() => dispatch(deleteContact(id))}
+            >
+              Delete
+            </Button>
+          </ButtonGroup>
+        </HStack>
+        <Divider my={4} />
+      </ListItem>
+    </>
   );
 };
 
