@@ -11,7 +11,7 @@ const UserMenu = () => {
     const dispatch = useDispatch();
     
     return (
-      <Flex align="center">
+      <Flex align="center" flexDir={{base: 'column', sm: 'row'}}>
         <p>Hello, {userName}!</p>
         <Button
           fontSize="sm"
