@@ -4,6 +4,11 @@ import { useDispatch } from 'react-redux';
 import { useContacts } from 'utilites/hooks/useContacts';
 import { addContact, patchContact } from '../../redux/contacts/operations';
 import {
+  toggleModal,
+  setIsContactEdited,
+  addEditedContactData,
+} from '../../redux/contacts/slice';
+import {
   FormControl,
   FormLabel,
   FormErrorMessage,
@@ -23,23 +28,32 @@ const FormComponent = ({ dataToEdit = null, closeModal }) => {
   const {
     contacts,
     isContactEdited,
-    editedContactData: { id },
+    editedContactData: { name, number, id },
     isLoading,
   } = useContacts();
   const dispatch = useDispatch();
 
-  const handleSubmit = ({ name, number }, { resetForm }) => {
-    const isNameTaken = contacts.find(contact => contact.name === name);
-    
-    if (isNameTaken) {
+  const handleSubmit = (values, { resetForm }) => {
+    const isNameTaken = contacts.find(contact => contact.name === values.name);
+
+    if (isNameTaken && !isContactEdited) {
       return alert(`${isNameTaken.name} is already in contacts`);
     }
     if (isContactEdited) {
-      dispatch(patchContact({ name, number, id }));
-      resetForm();
-      return;
+      if (values.name === name && values.number === number) {
+        dispatch(toggleModal());
+        dispatch(addEditedContactData({ name: '', number: '', id: '' }));
+        dispatch(setIsContactEdited(false));
+        return;
+      } else {
+        dispatch(
+          patchContact({ name: values.name, number: values.number, id })
+        );
+        resetForm();
+        return;
+      }
     }
-    dispatch(addContact({ name, number }));
+    dispatch(addContact({ name: values.name, number: values.number }));
     resetForm();
   };
 

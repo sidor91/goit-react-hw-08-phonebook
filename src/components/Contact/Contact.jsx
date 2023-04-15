@@ -31,7 +31,7 @@ const Contact = ({ name, number, id }) => {
       <ListItem>
         <HStack display={{ base: 'block', sm: 'flex' }} w="100%" spacing={4}>
           <Flex justify="space-between" w="100%">
-            <Avatar mr={4} name={name} src="https://bit.ly/broken-ListItemnk" />
+            <Avatar mr={4} name={name} src="" />
             <HStack w="100%">
               <Box>
                 <Text fontSize={{ base: 'sm', md: 'md' }}>{name}</Text>
