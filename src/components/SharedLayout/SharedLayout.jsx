@@ -16,7 +16,6 @@ import {
   useColorMode,
   IconButton,
 } from '@chakra-ui/react';
-// import { SunIcon } from '@chakra-ui/icons';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 
@@ -38,15 +37,6 @@ const SharedLayout = () => {
             onClick={toggleColorMode}
             icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
           />
-          {/* <SunIcon mr={2} />
-          <Switch
-            colorScheme="orange"
-            mr={2}
-            onChange={() => {
-              toggleColorMode();
-            }}
-          />
-          <MoonIcon /> */}
           <Box p="4">{isLoggedIn ? <UserMenu /> : <AuthNav />}</Box>
         </Flex>
       </StyledHeader>

@@ -13,17 +13,11 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
-  darkTheme: false,
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    toggleDarkTheme: (state) => {
-      state.darkTheme = !state.darkTheme;
-    },
-  },
   extraReducers: builder => {
     builder
       .addCase(signupUser.fulfilled, (state, action) => {
@@ -67,7 +61,3 @@ export const authPersistedReducer = persistReducer(
   persistConfig,
   authSlice.reducer
 );
-
-export const {
-  toggleDarkTheme,
-} = authSlice.actions;
