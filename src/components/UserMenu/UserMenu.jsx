@@ -14,6 +14,7 @@ const UserMenu = () => {
       <Flex align="center" flexDir={{base: 'column', sm: 'row'}}>
         <p>Hello, {userName}!</p>
         <Button
+          mt={{base: 1, sm: 'unset'}}
           fontSize="sm"
           size="sm"
           ml={4}
