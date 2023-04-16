@@ -54,7 +54,7 @@ const persistConfig = {
   key: 'auth',
   version: 1,
   storage,
-  whitelist: ['token', 'darkTheme'],
+  whitelist: ['token'],
 };
 
 export const authPersistedReducer = persistReducer(

@@ -11,13 +11,13 @@ const UserMenu = () => {
     const dispatch = useDispatch();
     
     return (
-      <Flex align="center" flexDir={{base: 'column', sm: 'row'}}>
+      <Flex align="center" flexDir={{ base: 'column', sm: 'row' }}>
         <p>Hello, {userName}!</p>
         <Button
-          mt={{base: 1, sm: 'unset'}}
+          mt={{ base: 1, sm: 'unset' }}
           fontSize="sm"
           size="sm"
-          ml={4}
+          ml={{ base: 1, sm: '4' }}
           colorScheme="orange"
           onClick={() => {
             dispatch(logoutUser());
