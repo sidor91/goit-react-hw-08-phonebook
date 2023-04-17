@@ -1,4 +1,4 @@
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useContacts } from 'utilites/hooks/useContacts';
@@ -12,17 +12,51 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
+  FormHelperText,
   Input,
   Button,
-  HStack,
-  Box,
+  ButtonGroup,
 } from '@chakra-ui/react';
 
 const initialValues = { name: '', number: '' };
 const schema = yup.object({
-  name: yup.string().required(),
-  number: yup.number().required(),
+  name: yup
+    .string()
+    .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/)
+    .required(),
+  number: yup
+    .string()
+    .matches(
+      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/
+    )
+    .required(),
 });
+
+const validateName = value => {
+  let error;
+  if (!value) {
+    error = 'Required';
+  } else if (
+    !/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/i.test(value)
+  ) {
+    error = 'Invalid name';
+  }
+  return error;
+};
+
+const validateNumber = value => {
+  let error;
+  if (!value) {
+    error = 'Required';
+  } else if (
+    !/\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/.test(
+      value
+    )
+  ) {
+    error = 'Invalid number';
+  }
+  return error;
+};
 
 const FormComponent = ({ dataToEdit = null, closeModal }) => {
   const {
@@ -57,83 +91,100 @@ const FormComponent = ({ dataToEdit = null, closeModal }) => {
     resetForm();
   };
 
-  const validateName = value => {
-    if (!value) {
-      return 'This field is required';
-    }
-  };
-
   return (
     <Formik
       initialValues={dataToEdit || initialValues}
       onSubmit={handleSubmit}
       validationSchema={schema}
     >
-      <Form>
-        <Field
-          validate={validateName}
-          type="text"
-          name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-        >
-          {({ field, form }) => (
-            <FormControl isInvalid={form.errors.name && form.touched.name}>
-              <FormLabel>Full name</FormLabel>
-              <Input focusBorderColor="#DD6B20" {...field} placeholder="Name" />
-              <FormErrorMessage>{form.errors.name}</FormErrorMessage>
-            </FormControl>
-          )}
-        </Field>
-        <Field
-          validate={validateName}
-          type="tel"
-          name="number"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-        >
-          {({ field, form }) => (
-            <FormControl isInvalid={form.errors.number}>
-              <FormLabel>Phone number</FormLabel>
-              <Input
-                focusBorderColor="#DD6B20"
-                {...field}
-                placeholder="Number"
-              />
-              <FormErrorMessage>{form.errors.number}</FormErrorMessage>
-            </FormControl>
-          )}
-        </Field>
-        <HStack>
-          <Box>
-            <Button
-              mt={4}
-              colorScheme="orange"
-              isLoading={isLoading}
-              type="submit"
-            >
-              Save
-            </Button>
-          </Box>
-
-          <Box>
-            <Button
-              mt={4}
-              colorScheme="gray"
-              type="button"
-              onClick={() => {
-                closeModal();
+      {({ errors, touched, isValidating }) => {
+        return (
+          <Form>
+            <Field validate={validateName} type="text" name="name" required>
+              {({ field, form }) => {
+                // console.log(form.errors.number);
+                // console.log(form.touched.name);
+                return (
+                  <FormControl>
+                    <FormLabel>Full name</FormLabel>
+                    <Input
+                      focusBorderColor="#DD6B20"
+                      {...field}
+                      placeholder="Name"
+                    />
+                    {form.errors.name &&
+                    form.errors.name === 'name is a required field' ? (
+                      <FormHelperText>Name is required.</FormHelperText>
+                    ) : (
+                      form.errors.name && (
+                        <FormHelperText>
+                          Invalid name. Name may contain only letters,
+                          apostrophe, dash and spaces. For example Adrian, Jacob
+                          Mercer, Charles de Batz de Castelmore d'Artagnan
+                        </FormHelperText>
+                      )
+                    )}
+                  </FormControl>
+                );
               }}
-            >
-              Cancel
-            </Button>
-          </Box>
-        </HStack>
-      </Form>
+            </Field>
+            <Field validate={validateNumber} type="tel" name="number" required>
+              {({ field, form }) => (
+                <FormControl mt={4}>
+                  <FormLabel>Phone number</FormLabel>
+                  <Input
+                    focusBorderColor="#DD6B20"
+                    {...field}
+                    placeholder="Number"
+                  />
+                  {form.errors.number &&
+                  form.errors.number === 'number is a required field' ? (
+                    <FormHelperText>Number is required.</FormHelperText>
+                  ) : (
+                    form.errors.number && (
+                      <FormHelperText>
+                        Invalid number. Phone number must be digits and can
+                        contain spaces, dashes, parentheses and can start with +
+                      </FormHelperText>
+                    )
+                  )}
+                </FormControl>
+              )}
+            </Field>
+            <ButtonGroup spacing="4">
+              <Button
+                mt={4}
+                colorScheme="orange"
+                isLoading={isLoading}
+                type="submit"
+              >
+                Save
+              </Button>
+
+              <Button
+                mt={4}
+                colorScheme="gray"
+                type="button"
+                onClick={() => {
+                  closeModal();
+                }}
+              >
+                Cancel
+              </Button>
+            </ButtonGroup>
+          </Form>
+        );
+      }}
     </Formik>
   );
 };
 
 export default FormComponent;
+
+//name patterns
+// pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+// title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+
+//number patterns
+// pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+// title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
