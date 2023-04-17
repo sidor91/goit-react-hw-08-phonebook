@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useContacts } from 'utilites/hooks/useContacts';
@@ -11,7 +11,6 @@ import {
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
   FormHelperText,
   Input,
   Button,
@@ -31,32 +30,6 @@ const schema = yup.object({
     )
     .required(),
 });
-
-const validateName = value => {
-  let error;
-  if (!value) {
-    error = 'Required';
-  } else if (
-    !/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/i.test(value)
-  ) {
-    error = 'Invalid name';
-  }
-  return error;
-};
-
-const validateNumber = value => {
-  let error;
-  if (!value) {
-    error = 'Required';
-  } else if (
-    !/\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/.test(
-      value
-    )
-  ) {
-    error = 'Invalid number';
-  }
-  return error;
-};
 
 const FormComponent = ({ dataToEdit = null, closeModal }) => {
   const {
@@ -100,10 +73,8 @@ const FormComponent = ({ dataToEdit = null, closeModal }) => {
       {({ errors, touched, isValidating }) => {
         return (
           <Form>
-            <Field validate={validateName} type="text" name="name" required>
+            <Field type="text" name="name" required>
               {({ field, form }) => {
-                // console.log(form.errors.number);
-                // console.log(form.touched.name);
                 return (
                   <FormControl>
                     <FormLabel>Full name</FormLabel>
@@ -128,7 +99,7 @@ const FormComponent = ({ dataToEdit = null, closeModal }) => {
                 );
               }}
             </Field>
-            <Field validate={validateNumber} type="tel" name="number" required>
+            <Field type="tel" name="number" required>
               {({ field, form }) => (
                 <FormControl mt={4}>
                   <FormLabel>Phone number</FormLabel>
@@ -188,3 +159,29 @@ export default FormComponent;
 //number patterns
 // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
 // title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+
+// const validateName = value => {
+//   let error;
+//   if (!value) {
+//     error = 'Required';
+//   } else if (
+//     !/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/i.test(value)
+//   ) {
+//     error = 'Invalid name';
+//   }
+//   return error;
+// };
+
+// const validateNumber = value => {
+//   let error;
+//   if (!value) {
+//     error = 'Required';
+//   } else if (
+//     !/\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/.test(
+//       value
+//     )
+//   ) {
+//     error = 'Invalid number';
+//   }
+//   return error;
+// };
