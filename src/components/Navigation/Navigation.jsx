@@ -1,18 +1,18 @@
 import { useAuth } from 'utilites/hooks/useAuth';
+import { turnOffIsLoginFailed } from 'redux/auth/slice'; 
+import { useDispatch } from 'react-redux';
 import { ButtonGroup, Button } from '@chakra-ui/react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
+  const dispatch = useDispatch();
 
   const handleClick = () => {
-    if (pathname === '/contacts') {
-      return navigate('/');
-    }
-    return navigate('/contacts');
+    dispatch(turnOffIsLoginFailed());
   }
+  
   return (
     <nav>
       <ButtonGroup gap="2">
@@ -23,7 +23,7 @@ const Navigation = () => {
           onClick={handleClick}
           fontSize="xl"
         >
-          Home
+          <Link to="/">Home</Link>
         </Button>
         {isLoggedIn && (
           <Button
@@ -33,7 +33,7 @@ const Navigation = () => {
             onClick={handleClick}
             fontSize="xl"
           >
-            Contacts
+            <Link to="/contacts">Contacts</Link>
           </Button>
         )}
       </ButtonGroup>

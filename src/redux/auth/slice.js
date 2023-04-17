@@ -5,7 +5,7 @@ import {
   signupUser,
   loginUser,
   logoutUser,
-  FetchCurrentUser,
+  fetchCurrentUser,
 } from './operations';
 
 const initialState = {
@@ -13,37 +13,51 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  isLoginFailed: false,
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    turnOffIsLoginFailed: (state) => {
+      state.isLoginFailed = false;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(signupUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
+        state.isLoginFailed = false;
+      })
+      .addCase(signupUser.rejected, state => {
+        state.isLoginFailed = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
+        state.isLoginFailed = false;
+      })
+      .addCase(loginUser.rejected, state => {
+        state.isLoginFailed = true;
       })
       .addCase(logoutUser.fulfilled, state => {
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
       })
-      .addCase(FetchCurrentUser.pending, state => {
+      .addCase(fetchCurrentUser.pending, state => {
         state.isRefreshing = true;
       })
-      .addCase(FetchCurrentUser.fulfilled, (state, action) => {
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
-      .addCase(FetchCurrentUser.rejected, state => {
+      .addCase(fetchCurrentUser.rejected, state => {
         state.isRefreshing = false;
       })
       .addDefaultCase(state => state);
@@ -61,3 +75,7 @@ export const authPersistedReducer = persistReducer(
   persistConfig,
   authSlice.reducer
 );
+
+// 
+
+export const { turnOffIsLoginFailed } = authSlice.actions;

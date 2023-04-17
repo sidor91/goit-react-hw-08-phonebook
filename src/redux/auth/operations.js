@@ -53,7 +53,7 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-export const FetchCurrentUser = createAsyncThunk(
+export const fetchCurrentUser = createAsyncThunk(
   'users/current',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();

@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import { lazy } from 'react';
-import { FetchCurrentUser } from '../redux/auth/operations';
+import { fetchCurrentUser } from '../redux/auth/operations';
 import { PrivateRoute } from './PrivateRoute';
 import { RestrictedRoute } from './RestrictedRoute';
 import { useAuth } from 'utilites/hooks/useAuth'
@@ -30,7 +30,7 @@ const App = () => {
   const { isModalOpen } = useContacts();
 
   useEffect(() => {
-    dispatch(FetchCurrentUser());
+    dispatch(fetchCurrentUser());
   }, [dispatch]);
 
   return isRefreshing ? (
